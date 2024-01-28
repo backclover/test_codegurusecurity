@@ -1,0 +1,2 @@
+# test_codegurusecurity
+CodeGuru Securityの検証用リポジトリ
